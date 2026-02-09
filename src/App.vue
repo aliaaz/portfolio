@@ -6,7 +6,7 @@ const email = ref('aliaatheerah.zulkifli@gmail.com')
 const projects = [
   { id: 1, title: 'Project 1', desc: 'Project 1 description', tech: ['Vue 3', 'Python'] },
   { id: 2, title: 'Project 2', desc: 'Project 2 description', tech: ['Node.js', 'Redis'] },
-  { id: 3, title: 'Project 3', desc: 'Project 3 description', tech: ['Nuxt', 'Stripe'] }
+  { id: 3, title: 'Project 3', desc: 'Project 3 description', tech: ['Nuxt'] }
 ]
 
 const scrollTo = (id) => {
