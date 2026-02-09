@@ -246,7 +246,7 @@ h3 {
 }
 
 .email-link {
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   color: #818cf8;
   text-decoration: none;
   font-weight: 700;
