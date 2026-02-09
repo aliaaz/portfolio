@@ -4,13 +4,17 @@ import { ref } from 'vue'
 const name = ref('Alia Atheerah')
 const email = ref('aliaatheerah.zulkifli@gmail.com')
 const projects = [
-  { id: 1, title: 'Project 1', desc: 'Project 1 description', tech: ['Vue 3', 'Python'] },
+  { id: 1, title: 'Group Expense', desc: 'Group Expense management', tech: ['Vue 3'], url: 'https://group-expense.web.app/' },
   { id: 2, title: 'Project 2', desc: 'Project 2 description', tech: ['Node.js', 'Redis'] },
   { id: 3, title: 'Project 3', desc: 'Project 3 description', tech: ['Nuxt'] }
 ]
 
 const scrollTo = (id) => {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' })
+}
+
+const openNewPage = (url) => {
+  window.open(url, '_blank');
 }
 </script>
 
@@ -40,7 +44,7 @@ const scrollTo = (id) => {
     <section id="projects" class="container">
       <h2 class="section-title">Selected Projects</h2>
       <div class="grid">
-        <div v-for="p in projects" :key="p.id" class="card">
+        <div v-for="p in projects" :key="p.id" class="card" @click="p.url ? openNewPage(p.url) : ''">
           <div class="card-number">0{{ p.id }}</div>
           <h3>{{ p.title }}</h3>
           <p>{{ p.desc }}</p>
