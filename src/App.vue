@@ -5,14 +5,16 @@ const name = ref('Alia Atheerah')
 const email = ref('aliaatheerah.zulkifli@gmail.com')
 const projects = ref([])
 const loading = ref(true)
+const error = ref(null)
 
 onMounted(async () => {
   try {
     // We fetch from the root because 'public' content is served at '/'
     const response = await fetch('./projects.json')
     projects.value = await response.json()
-  } catch (error) {
-    console.error("Failed to load projects:", error)
+  } catch (err) {
+    error.value = true
+    console.error("Failed to load projects:", err)
   } finally {
     loading.value = false
   }
@@ -52,16 +54,38 @@ const openNewPage = (url) => {
 
     <section id="projects" class="container">
       <h2 class="section-title">Selected Projects</h2>
-      <div class="grid">
-        <div v-for="p in projects" :key="p.id" class="card" @click="p.url ? openNewPage(p.url) : ''">
-          <div class="card-number">0{{ p.id }}</div>
-          <h3>{{ p.title }}</h3>
-          <p>{{ p.desc }}</p>
+      <div v-if="loading" class="grid">
+        <div v-for="p in [1, 2, 3]" class="card">
+          <div class="card-number">
+            <div class="ccs-placeholder ccs-w20"></div>
+          </div>
+          <h3>
+            <div class="ccs-placeholder ccs-w60"></div>
+          </h3>
+          <p>
+          <div class="ccs-placeholder ccs-w90"></div>
+          </p>
           <div class="tags">
-            <span v-for="tag in p.tech" :key="tag" class="tag">{{ tag }}</span>
+            <span class="tag"></span>
           </div>
         </div>
       </div>
+      <div v-else-if="error" class="grid">
+        <div class="card">
+          <p>Couldn't load projects right now—check out my <a href="https://github.com/aliaaz" target="_blank"
+              rel="noopener noreferrer">GitHub</a> in the meantime</p>
+        </div>
+      </div>
+      <div v-else class="grid">
+        <div v-for="p in projects" :key="p.id" class="card" @click="p.url ? openNewPage(p.url) : ''">
+          <div class="card-number">{{ p.id < 10 ? 0 : '' }}{{ p.id }}</div>
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.desc }}</p>
+              <div class="tags">
+                <span v-for="tag in p.tech" :key="tag" class="tag">{{ tag }}</span>
+              </div>
+          </div>
+        </div>
     </section>
 
     <section id="contact" class="footer-cta">
