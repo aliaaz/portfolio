@@ -1,13 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const name = ref('Alia Atheerah')
 const email = ref('aliaatheerah.zulkifli@gmail.com')
-const projects = [
-  { id: 1, title: 'Group Expense', desc: 'Group Expense management', tech: ['Vue 3'], url: 'https://group-expense.web.app/' },
-  { id: 2, title: 'Project 2', desc: 'Project 2 description', tech: ['Node.js', 'Redis'] },
-  { id: 3, title: 'Project 3', desc: 'Project 3 description', tech: ['Nuxt'] }
-]
+const projects = ref([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    // We fetch from the root because 'public' content is served at '/'
+    const response = await fetch('./projects.json')
+    projects.value = await response.json()
+  } catch (error) {
+    console.error("Failed to load projects:", error)
+  } finally {
+    loading.value = false
+  }
+})
 
 const scrollTo = (id) => {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' })
